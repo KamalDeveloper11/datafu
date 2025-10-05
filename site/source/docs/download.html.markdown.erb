@@ -1,65 +1,44 @@
 ---
-title: Download - Apache DataFu
-section_name: Getting Started
+title: Download
+layout: docs
 version: 2.1.0
-license: >
-   Licensed to the Apache Software Foundation (ASF) under one or more
-   contributor license agreements.  See the NOTICE file distributed with
-   this work for additional information regarding copyright ownership.
-   The ASF licenses this file to You under the Apache License, Version 2.0
-   (the "License"); you may not use this file except in compliance with
-   the License.  You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
 ---
 
-# Download
+# Download Apache DataFu
 
-Apache DataFu is available for download as a source release and as compiled artifacts stored in a Maven repository. Please note that the latest version of datafu-pig and datafu-hourglass is not the same as the latest version of datafu-spark.
+Apache DataFu is released as source code.  The source releases are available for download from the [Apache Software Foundation](http://www.apache.org/dyn/closer.cgi/datafu/).
 
-## Source Releases
+## Latest Release
 
-The latest source release can be found here:
+The latest release is [Apache DataFu 2.1.0](http://www.apache.org/dyn/closer.cgi/datafu/datafu-2.1.0/).
 
-* <%= current_source_release_link(current_page.data.version) %>
+## Verification
 
-Previous releases:
+It is essential that you verify the integrity of the downloaded files using the PGP or SHA signatures.  Please read the [Verifying Apache HTTP Server Releases](http://www.apache.org/info/verification.html) page for more information on why you should verify our releases.
 
-* <%= archived_source_release_link("1.6.1") %>
+The PGP signatures can be verified using PGP or GPG.  First download the [KEYS](http://www.apache.org/dist/datafu/KEYS) file as well as the asc signature file for the particular distribution.  It is recommended that you get these files from the main distribution directory and not from the mirrors.
 
-### Validation
+    gpg --import KEYS
 
-It is important to validate the release using either the PGP signature (`.asc` file) or hashes (`.sha512` file).  For more information on verification of Apache releases, see [here](https://www.apache.org/info/verification.html).  The `KEYS` file can be found [here](https://www.apache.org/dist/datafu/KEYS).
+or
 
-Once fetched, the `KEYS` file can be imported and the `.asc` file can used to verify the release.
+    gpg --import <(curl http://www.apache.org/dist/datafu/KEYS)
 
-```
-gpg --import KEYS
-gpg --verify apache-datafu-sources-<%= current_page.data.version %>.tgz.asc apache-datafu-sources-<%= current_page.data.version %>.tgz
-```
+To verify the binaries/sources you can download the relevant asc files for it from main distribution directory and follow the below guide.
 
-The `sha512sum` tool can be used to compute a SHA-512 hash that can be compared against the `.sha512` file:
+    gpg --verify apache-datafu-sources-x.y.z.tgz.asc
 
-```
-sha512sum apache-datafu-sources-<%= current_page.data.version %>.tgz
-cat apache-datafu-sources-<%= current_page.data.version %>.tgz.sha512
-```
+The command above will assume you are verifying `apache-datafu-sources-x.y.z.tgz` and produce "Good signature" if the archive is valid.
 
-Note that the hashes are only intended to check that the file has been downloaded correctly.  They do not provide guarantees on the authenticity of the file.  The signature should instead be used for this purpose.  For more information see [here](https://www.apache.org/info/verification.html).
+## Source Release
 
-### Setup
+### Prerequisites
 
 Make sure you have [Gradle](http://gradle.org/gradle-download/) installed.  Extract the source and bootstrap the `gradlew` script that's used for building.  The `gradlew` script uses the specific version of Gradle that DataFu is intended to be built with.
 
     tar xvf apache-datafu-sources-<%= current_page.data.version %>.tgz
     cd apache-datafu-sources-<%= current_page.data.version %>
-    gradle -b bootstrap.gradle
+    gradle -p . bootstrap.gradle
 
 To build the JARs, run:
 
@@ -67,55 +46,97 @@ To build the JARs, run:
 
 This will produce JARs in the following directories:
 
-* `datafu-spark/build/libs`
-* `datafu-pig/build/libs`
-* `datafu-hourglass/build/libs`
+* `datafu-pig/build/libs/`
+* `datafu-hourglass/build/libs/`
+* `datafu-spark/build/libs/`
 
-## Local Maven Install
+## Building from Git
 
-DataFu artifacts can be installed to your local maven repository like so:
+If you want to build from the latest source code, you can clone the repository:
 
-    ./gradlew install
+    git clone https://git-wip-us.apache.org/repos/asf/datafu.git
+    cd datafu
+    ./gradlew assemble
 
-Assuming your local maven repository is at `~/.m2`, you should see the DataFu artifacts under `~/.m2/repository/org/apache/datafu/`.  You should now be able to declare a dependency on DataFu artifacts as shown below.
+## Previous Releases
 
-## Maven
+All previous releases of Apache DataFu are available from the [Apache archive](http://archive.apache.org/dist/datafu/).
 
-The latest release can be found in [Apache's Maven Repository for DataFu](https://repository.apache.org/content/groups/public/org/apache/datafu):
+## Release Notes
 
-* [datafu-spark_2.11-1.8.0](https://repository.apache.org/content/groups/public/org/apache/datafu/datafu-spark_2.11/1.8.0/)
-* [datafu-spark_2.12-<%= current_page.data.version %>](https://repository.apache.org/content/groups/public/org/apache/datafu/datafu-spark_2.12/<%= current_page.data.version %>/)
-* [datafu-pig-1.6.1](https://repository.apache.org/content/groups/public/org/apache/datafu/datafu-pig/1.6.1/)
-* [datafu-hourglass-1.6.1](https://repository.apache.org/content/groups/public/org/apache/datafu/datafu-hourglass/1.6.1/)
+For information about what's new in each release, see the [release notes](http://datafu.apache.org/docs/datafu/release-notes.html).
 
-You can also use a dependency management system to download the DataFu artifacts and all their dependencies.  Some examples appear below.
+## Maven Central
 
-SBT:
+Apache DataFu artifacts are also available from [Maven Central](http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22org.apache.datafu%22).
 
-```scala
-libraryDependencies += "org.apache.datafu" %%  "datafu-spark" % "<%= current_page.data.version %>" intransitive
+### Maven Coordinates
+
+#### DataFu Pig
+```xml
+<dependency>
+  <groupId>org.apache.datafu</groupId>
+  <artifactId>datafu-pig</artifactId>
+  <version>2.1.0</version>
+</dependency>
 ```
 
-Gradle:
-
-```groovy
-compile "org.apache.datafu:datafu-spark:<%= current_page.data.version %>"
+#### DataFu Hourglass
+```xml
+<dependency>
+  <groupId>org.apache.datafu</groupId>
+  <artifactId>datafu-hourglass</artifactId>
+  <version>2.1.0</version>
+</dependency>
 ```
 
-Maven:
+#### DataFu Spark
+```xml
+<dependency>
+  <groupId>org.apache.datafu</groupId>
+  <artifactId>datafu-spark_2.11</artifactId>
+  <version>2.1.0</version>
+</dependency>
+```
+
+or for Scala 2.12:
 
 ```xml
 <dependency>
   <groupId>org.apache.datafu</groupId>
-  <artifactId>datafu-spark</artifactId>
-  <version><%= current_page.data.version %></version>
+  <artifactId>datafu-spark_2.12</artifactId>
+  <version>2.1.0</version>
 </dependency>
 ```
 
-## Next Steps
+### Gradle Coordinates
 
-See the following guides for next steps:
+#### DataFu Pig
+```gradle
+compile 'org.apache.datafu:datafu-pig:2.1.0'
+```
 
-* [Getting started with DataFu for Spark](/docs/spark/getting-started.html)
-* [Getting started with DataFu for Pig](/docs/datafu/getting-started.html)
-* [Getting started with DataFu Hourglass](/docs/hourglass/getting-started.html)
+#### DataFu Hourglass
+```gradle
+compile 'org.apache.datafu:datafu-hourglass:2.1.0'
+```
+
+#### DataFu Spark
+```gradle
+compile 'org.apache.datafu:datafu-spark_2.11:2.1.0'
+```
+
+or for Scala 2.12:
+
+```gradle
+compile 'org.apache.datafu:datafu-spark_2.12:2.1.0'
+```
+
+## Support
+
+If you encounter any issues with the downloads or have questions about Apache DataFu, please:
+
+1. Check the [documentation](http://datafu.apache.org/docs/)
+2. Search the [mailing list archives](http://mail-archives.apache.org/mod_mbox/datafu-user/)
+3. Join the [user mailing list](mailto:user-subscribe@datafu.apache.org)
+4. Report issues on [JIRA](https://issues.apache.org/jira/browse/DATAFU)

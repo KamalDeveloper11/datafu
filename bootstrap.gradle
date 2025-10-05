@@ -23,10 +23,11 @@
  * and its accompanying jars.
  */
 
-defaultTasks 'downloadWrapper'
+plugins {
+    id 'wrapper'
+}
 
-task downloadWrapper(type: Wrapper) {
-    description = "Download the gradle wrapper and requisite files. Overwrites existing wrapper files."
+wrapper {
     gradleVersion = project.gradleVersion
-    validateDistributionUrl=true
+    distributionType = Wrapper.DistributionType.BIN
 }
