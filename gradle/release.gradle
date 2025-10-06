@@ -63,7 +63,7 @@ task sourceRelease(type: Tar, dependsOn: prepare_release_config) {
   description = "Build a source release, specifically excluding the build directories and gradle wrapper files"
   compression = Compression.GZIP
 
-  baseName "apache-datafu-sources-${releaseVersion}"
+  archiveBaseName = "apache-datafu-sources-${releaseVersion}"
 
   from(project.rootDir) {
     // don't include gradle.properties because we use a modified version
@@ -90,14 +90,14 @@ task sourceRelease(type: Tar, dependsOn: prepare_release_config) {
     }
   }
 
-  into(baseName)
+  into(archiveBaseName)
 
   // Set destination directory.
-  destinationDir = file("${project.buildDir}/distribution/source")
+  destinationDirectory = file("${project.buildDir}/distribution/source")
 
-  archiveName = "${baseName}.tgz"
+  archiveFileName = "${archiveBaseName}.tgz"
   doLast {
-    ant.checksum file:"$destinationDir/$archiveName", algorithm: "SHA-512", fileext: ".sha512"
+    ant.checksum file:"$destinationDirectory/$archiveFileName", algorithm: "SHA-512", fileext: ".sha512"
   }
 }
 
@@ -113,8 +113,10 @@ signing {
 
 task release(dependsOn: signSourceRelease)
 
-// Publishing to Apache's Maven repository (Nexus). To install the archives in the
-// local repository, run the 'install' task.
+// Note: nexus plugin is deprecated in Gradle 9.x
+// For publishing to Apache's Maven repository, use the modern maven-publish plugin instead
+// This section has been commented out for Gradle 9.x compatibility
+/*
 subprojects {
   apply plugin: 'nexus'
 
@@ -148,3 +150,4 @@ subprojects {
     }
   }
 }
+*/

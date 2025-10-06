@@ -24,11 +24,16 @@ import org.gradle.api.artifacts.PublishArtifact
 import org.gradle.api.java.archives.Manifest
 import org.gradle.api.java.archives.internal.DefaultManifest
 import org.gradle.api.logging.Logger
+import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.Property
+import org.gradle.api.provider.ProviderFactory
 import org.gradle.api.tasks.JavaExec
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskDependency
 import org.gradle.api.tasks.bundling.Jar
+import org.gradle.api.internal.provider.PropertyFactory
+import org.gradle.jvm.toolchain.JavaToolchainService
+import org.gradle.process.internal.ExecActionFactory
 import org.gradle.util.internal.ConfigureUtil
 
 /**
@@ -76,6 +81,32 @@ class Autojar extends JavaExec implements PublishArtifact {
         dependsOn = [baseJar, extractAutojar]
         inputs.files([baseJar.getArchivePath().absoluteFile, extractAutojar.extractedFile])
         outputs.file(autojarOutput)
+    }
+
+    // Required implementations for Gradle 9.x
+    @Override
+    ObjectFactory getObjectFactory() {
+        return project.objects
+    }
+
+    @Override
+    ProviderFactory getProviderFactory() {
+        return project.providers
+    }
+
+    @Override
+    PropertyFactory getPropertyFactory() {
+        return project.extensions.getByType(PropertyFactory)
+    }
+
+    @Override
+    ExecActionFactory getExecActionFactory() {
+        return project.extensions.getByType(ExecActionFactory)
+    }
+
+    @Override
+    JavaToolchainService getJavaToolchainService() {
+        return project.extensions.getByType(JavaToolchainService)
     }
 
     @TaskAction
