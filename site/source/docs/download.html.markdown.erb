@@ -34,11 +34,11 @@ The command above will assume you are verifying `apache-datafu-sources-x.y.z.tgz
 
 ### Prerequisites
 
-Make sure you have [Gradle](http://gradle.org/gradle-download/) installed.  Extract the source and bootstrap the `gradlew` script that's used for building.  The `gradlew` script uses the specific version of Gradle that DataFu is intended to be built with.
+Make sure you have [Gradle](http://gradle.org/gradle-download/) installed.  Extract the source and generate the `gradlew` script that's used for building.  The `gradlew` script uses the specific version of Gradle that DataFu is intended to be built with.
 
     tar xvf apache-datafu-sources-<%= current_page.data.version %>.tgz
     cd apache-datafu-sources-<%= current_page.data.version %>
-    gradle -p . bootstrap.gradle
+    gradle wrapper --gradle-version 9.1.0
 
 To build the JARs, run:
 

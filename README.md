@@ -79,11 +79,11 @@ To build DataFu from a source release, first verify the signature:
 
 The command above will assume you are verifying `apache-datafu-sources-x.y.z.tgz` and produce "Good signature" if the archive is valid.
 
-To build DataFu from a source release, it is first necessary to download a gradle wrapper script.  This bootstrapping process requires Gradle to be installed on the source machine.  Gradle is available through most package managers or directly from [its website](http://www.gradle.org/).  Once you have installed Gradle and have ensured that the `gradle` is available in your path, you can bootstrap the wrapper with:
+To build DataFu from a source release, it is first necessary to generate the gradle wrapper. This can be done with:
 
-    gradle -p . bootstrap.gradle
+    gradle wrapper --gradle-version 9.1.0
 
-After the bootstrap script has completed, you should find a `gradlew` script in the root of the project.  The regular gradlew instructions below should then be available.
+After the wrapper task has completed, you should find a `gradlew` script in the root of the project. The regular gradlew instructions below should then be available.
 
 When building from a source release, the version for all generated artifacts will be of the form `x.y.z`.  If you were to clone the git repo and build you would find `-SNAPSHOT` appended to the version.  This helps to distinguish official releases from those generated from the code repository for testing purposes.
 

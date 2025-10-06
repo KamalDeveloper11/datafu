@@ -69,9 +69,9 @@ jobs:
     - name: Make gradlew executable
       run: chmod +x ./gradlew
     
-    - name: Bootstrap and Build
+    - name: Generate Gradle wrapper and Build
       run: |
-        ./gradlew -p . bootstrap.gradle
+        ./gradlew wrapper --gradle-version 9.1.0
         ./gradlew clean assemble
 
     - name: Perform CodeQL Analysis

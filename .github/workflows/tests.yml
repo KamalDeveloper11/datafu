@@ -38,8 +38,8 @@ jobs:
     - name: Make gradlew executable
       run: chmod +x ./gradlew
 
-    - name: Bootstrap Gradle wrapper
-      run: ./gradlew -p . bootstrap.gradle
+    - name: Generate Gradle wrapper
+      run: ./gradlew wrapper --gradle-version 9.1.0
 
     - name: Build and run tests
       run: ./datafu-spark/build_and_test_spark.sh -q
