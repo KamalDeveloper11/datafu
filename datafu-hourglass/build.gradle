@@ -19,7 +19,7 @@
 
 apply plugin: 'java'
 
-archivesBaseName = 'datafu-hourglass'
+archiveBaseName = 'datafu-hourglass'
 
 import groovy.xml.MarkupBuilder
 

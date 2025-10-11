@@ -30,7 +30,7 @@ plugins {
 apply plugin: 'java'
 apply plugin: datafu.autojar.GradleAutojarPlugin
 
-archivesBaseName = 'datafu-pig'
+archiveBaseName = 'datafu-pig'
 
 import groovy.xml.MarkupBuilder
 

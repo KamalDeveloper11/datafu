@@ -29,9 +29,10 @@ datafu-pig/docs
 datafu-pig/queries
 datafu-pig/query
 *.patch
-gradle/wrapper/gradle-wrapper.jar
-gradle/wrapper/gradle-wrapper.properties
-gradlew*
+# Gradle wrapper files are now included in version control for Gradle 9.x compatibility
+# gradle/wrapper/gradle-wrapper.jar
+# gradle/wrapper/gradle-wrapper.properties
+# gradlew*
 .java-version
 datafu-spark/out
 datafu-spark/derby.log

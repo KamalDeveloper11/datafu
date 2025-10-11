@@ -66,13 +66,8 @@ jobs:
          distribution: 'adopt'
          cache: 'gradle'
     
-    - name: Make gradlew executable
-      run: chmod +x ./gradlew
-    
-    - name: Generate Gradle wrapper and Build
-      run: |
-        ./gradlew wrapper --gradle-version 9.1.0
-        ./gradlew clean assemble
+    - name: Build
+      run: ./gradlew clean assemble
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
